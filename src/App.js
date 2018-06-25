@@ -7,7 +7,7 @@
       return (
         <div >
         < Layout>
-        <BurgerBuilder/>
+          <BurgerBuilder/>
         </Layout>
         </div>
       );
