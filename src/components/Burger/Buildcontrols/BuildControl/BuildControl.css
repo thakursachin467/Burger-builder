@@ -1,10 +1,8 @@
-.BuildControl{
+.BuildControl {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 5px 0;
-    font: inherit;
-
 }
 
 .BuildControl button {
@@ -17,6 +15,7 @@
     cursor: pointer;
     outline: none;
 }
+
 
 .BuildControl button:disabled {
     background-color: #AC9980;
@@ -35,8 +34,6 @@
     padding: 10px;
     font-weight: bold;
     width: 80px;
-    font: inherit;
-    margin-right: 10px;
 }
 
 .BuildControl .Less {  
