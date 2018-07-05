@@ -17,3 +17,31 @@
     height: 100%;
     
 }
+
+@media(max-width:499px) {
+    .DesktopOnly {
+        display: none;
+    }
+    .MobileOnly {
+        display: none;
+    }
+}
+
+.MobileOnly {
+    display: none;
+}
+
+@media(max-width:499px) {
+   
+    .MobileOnly {
+        display: block;
+    }
+}
+
+.Div {
+    width: 35px;
+    height: 5px;
+    background-color: white;
+    margin: 6px 0;
+}
+
