@@ -1,39 +1,48 @@
 import React,{Component} from 'react';
+import {Route} from 'react-router-dom';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
+import ContactData from './ContactData/ContactData';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 class Checkout extends Component {
     state ={
-        ingedrient:{
-            salad:1,
-            cheese:1,
-            bacon:1,
-            meat:1
-        }
+        ingedrient:null,
+        totalPrice:null
     }
     
     checkoutCancelHandller = () => {
-        this.props.history.goBack();
+        this.props.history.push('/');
     }
     checkoutContinueHandller = () => {
         this.props.history.replace('/checkout/contact-data');
     }
-    componentDidMount(){
+    componentWillMount(){
         //console.log(this.props.location.search);
         const query= new URLSearchParams(this.props.location.search);
         const ingedrient={}
+        let price=0;
         for(let params of query.entries()){
-                ingedrient[params[0]]=+params[1]
+                if(params[0]==="price"){
+                    price=params[1];
+                } else{
+                ingedrient[params[0]]=+params[1];
+                }
         }
-        this.setState({ingedrient:ingedrient})
+        this.setState({ingedrient:ingedrient,totalPrice:price})
 
     }
 
     render(){
+        let orderSummary=<Spinner/>;
+        if(this.state.ingedrient){
+            orderSummary=<CheckoutSummary ingedrient={this.state.ingedrient}
+            checkoutCancel={this.checkoutCancelHandller}
+            checkoutContinue={this.checkoutContinueHandller}/>;
+        }
         return(
             <div>
-                <CheckoutSummary ingedrient={this.state.ingedrient}
-                checkoutCancel={this.checkoutCancelHandller}
-                checkoutContinue={this.checkoutContinueHandller}/>
+                {orderSummary}
+                <Route path={this.props.match.path + '/contact-data'}  render={(props)=>(<ContactData ingedrient={this.state.ingedrient} price={this.state.totalPrice} {...props}/>)}/>
             </div>
         );
     }

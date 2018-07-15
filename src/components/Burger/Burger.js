@@ -16,7 +16,7 @@ const burger=(props)=>{
         newingedrient=<p>please start adding ingedrients!</p>
     }
     return (
-        <div className={classes.Burger}>
+        <div className={classes.Burger} style={{height:props.height,width:props.width}}>
             <BurgerIngedrient type="bread-top"/>
             {newingedrient}
             <BurgerIngedrient type="bread-bottom"/>
