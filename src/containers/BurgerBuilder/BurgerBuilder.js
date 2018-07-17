@@ -117,7 +117,7 @@ class BurgerBuilder extends Component {
             }
             let orderSummary;
 
-            let burger= this.state.error? <p>Failed loading the ingedrient</p>:<Spinner/>;
+            let burger= this.state.error? <p>Failed loading the ingedrient</p>:<Spinner value={Math.floor((Math.random() * 4) + 1)}/>;
             if(this.state.ingedrient) {
                 orderSummary= <OrderSummary ingredient={this.state.ingedrient} 
             clickedCancel={this.purchaseCancelHandler}
@@ -139,7 +139,7 @@ class BurgerBuilder extends Component {
             }
 
             if(this.state.loading){
-                orderSummary= <Spinner/>
+                orderSummary= <Spinner value={Math.floor((Math.random() * 4) + 1)}/>
             }
 
             return(

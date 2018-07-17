@@ -30,7 +30,7 @@ class Orders extends Component {
         })
     }
     render(){
-        let Orders=<Spinner/>
+        let Orders=<Spinner value={Math.floor((Math.random() * 4) + 1)}/>
         if(!this.state.loading){
 
             Orders= 

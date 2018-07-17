@@ -146,6 +146,8 @@ class ContactData extends Component{
                 return isValid;
         }
 
+        
+
         onChangeHandler=(event,inputIdentifier )=>{
             console.log(event.target.value);
             const updatefrom={...this.state.orderForm};
@@ -200,7 +202,7 @@ class ContactData extends Component{
                 form=
                 <div>
                 <h4> Please Wait! Placing your order!</h4>
-                <Spinner/>
+                <Spinner value={Math.floor((Math.random() * 4) + 1)}/>
                 </div>;
             }
             return(
