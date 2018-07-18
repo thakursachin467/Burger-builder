@@ -7,19 +7,13 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/WithErrorHandler'
+import {connect } from 'react-redux';
+import * as actionType from '../../Store/actions';
 
 
-const INGEDRIENT_PRICES={
-    salad:30,
-    bacon:20,
-    meat:30,
-    cheese:15
-};
+
 class BurgerBuilder extends Component {
         state ={
-            ingedrient:null,
-                totalPrice:40,
-                purchasable:0,
                 purchasing:false,
                 loading:false,
                 error:null
@@ -36,6 +30,19 @@ class BurgerBuilder extends Component {
             })
         }
 
+        updatePurchaseState(ingr){
+                const sum=Object.keys(ingr)
+                .map(igKey=>{
+                    return ingr[igKey]
+                })
+                .reduce((sum,el)=>{
+                    return sum+el;
+                },0);
+
+                return sum>0;
+                console.log(sum);
+        }
+
         purchaseHandler =()=> {
             this.setState({purchasing:true});
         }
@@ -46,71 +53,66 @@ class BurgerBuilder extends Component {
 
         purchaseContinueHandler=()=>{
            
-            const queryParams=[]
-            for(let i in this.state.ingedrient){
-                queryParams.push(encodeURIComponent(i)+ "="+encodeURIComponent(this.state.ingedrient[i]));
-            }
-            queryParams.push("price="+this.state.totalPrice);
-            const queryString=queryParams.join('&');
+            
             this.props.history.push({
-                pathname:'/checkout',
-                search:'?'+queryString
+                pathname:'/checkout'
             });
         }
 
-        addIngederientHandler=(type)=>{
-                const oldCount=this.state.ingedrient[type];
-                const updateCount=oldCount+1;
-                const updateingedrient={
-                    ...this.state.ingedrient
-                };
-                const oldPurchase=this.state.purchasable;
-                const updatedPurchase=oldPurchase+1;
-                updateingedrient[type]=updateCount;
-                const additionPrice=INGEDRIENT_PRICES[type];
-                const oldPrice= this.state.totalPrice;
-                const newPrice=oldPrice+additionPrice;
-                this.setState({totalPrice:newPrice,
-                ingedrient:updateingedrient,
-                purchasable:updatedPurchase})
-        }
+        // addIngederientHandler=(type)=>{
+        //         const oldCount=this.state.ingedrient[type];
+        //         const updateCount=oldCount+1;
+        //         const updateingedrient={
+        //             ...this.state.ingedrient
+        //         };
+        //         const oldPurchase=this.state.purchasable;
+        //         const updatedPurchase=oldPurchase+1;
+        //         updateingedrient[type]=updateCount;
+        //         const additionPrice=INGEDRIENT_PRICES[type];
+        //         const oldPrice= this.state.totalPrice;
+        //         const newPrice=oldPrice+additionPrice;
+        //         this.setState({totalPrice:newPrice,
+        //         ingedrient:updateingedrient,
+        //         purchasable:updatedPurchase})
+        // }
 
-        removeIndederientHandler=(type)=>{
-            let updateCount=0;
-            const oldCount=this.state.ingedrient[type];
-            if(oldCount===0){
-              updateCount= oldCount;
-            } else{
-              updateCount= oldCount-1;
-            }
+        // removeIndederientHandler=(type)=>{
+        //     let updateCount=0;
+        //     const oldCount=this.state.ingedrient[type];
+        //     if(oldCount===0){
+        //       updateCount= oldCount;
+        //     } else{
+        //       updateCount= oldCount-1;
+        //     }
             
-            const updateingedrient={
-                ...this.state.ingedrient
-            };
-            const oldPurchase=this.state.purchasable;
-            let updatedPurchase=0
-            if(oldPurchase===0){
-              updatedPurchase=oldPurchase;
-            } else{
-              updatedPurchase=oldPurchase-1;
-            }
-            updateingedrient[type]=updateCount;
-            const removePrice=INGEDRIENT_PRICES[type];
-            const oldPrice=this.state.totalPrice;
-            const newPrice=oldPrice-removePrice;
-            this.setState({totalPrice:newPrice,
-                ingedrient:updateingedrient,
-                purchasable:updatedPurchase
-            })
+        //     const updateingedrient={
+        //         ...this.state.ingedrient
+        //     };
+        //     const oldPurchase=this.state.purchasable;
+        //     let updatedPurchase=0
+        //     if(oldPurchase===0){
+        //       updatedPurchase=oldPurchase;
+        //     } else{
+        //       updatedPurchase=oldPurchase-1;
+        //     }
+        //     updateingedrient[type]=updateCount;
+        //     const removePrice=INGEDRIENT_PRICES[type];
+        //     const oldPrice=this.state.totalPrice;
+        //     const newPrice=oldPrice-removePrice;
+        //     this.setState({totalPrice:newPrice,
+        //         ingedrient:updateingedrient,
+        //         purchasable:updatedPurchase
+        //     })
 
-        }
-
-        
+        // }
+       
 
 
         render() {
+            
+            
             const disableInfo={
-                    ...this.state.ingedrient
+                    ...this.props.ings
             };
             for(let key in disableInfo ){
                 disableInfo[key]= disableInfo[key]<=0
@@ -118,20 +120,20 @@ class BurgerBuilder extends Component {
             let orderSummary;
 
             let burger= this.state.error? <p>Failed loading the ingedrient</p>:<Spinner value={Math.floor((Math.random() * 4) + 1)}/>;
-            if(this.state.ingedrient) {
-                orderSummary= <OrderSummary ingredient={this.state.ingedrient} 
+            if(this.props.ings) {
+                orderSummary= <OrderSummary ingredient={this.props.ings} 
             clickedCancel={this.purchaseCancelHandler}
             clickedContinue={this.purchaseContinueHandler}
-            totalsum={this.state.totalPrice}/>;
+            totalsum={this.props.price}/>;
                 burger=(
                     <Aux>
-                    <Burger ingedrient={this.state.ingedrient}/>
+                    <Burger ingedrient={this.props.ings}/>
                     <BuidControl 
-                        ingedrientAdded={this.addIngederientHandler}
-                        ingedrientRemove={this.removeIndederientHandler}
+                        ingedrientAdded={this.props.onIngedrientAdded}
+                        ingedrientRemove={this.props.onIngedrientRemove}
                         disabled={disableInfo}
-                        price={this.state.totalPrice}
-                        oldPurchase={this.state.purchasable}
+                        price={this.props.price}
+                        oldPurchase={this.updatePurchaseState(this.props.ings)}
                         purchasing={this.purchaseHandler}
                     />
                     </Aux>
@@ -157,5 +159,18 @@ class BurgerBuilder extends Component {
 
 }
 
+const mapStateToProps=state=>{
+    return {
+        ings:state.ingedrient,
+        price:state.totalPrice
+    }
+}
 
- export default withErrorHandler(BurgerBuilder,axios);
+const mapDispatchToProps=(dispatch) =>{
+    return{
+         onIngedrientAdded:(ingname)=>dispatch({type:actionType.ADD_INGREDIENT,ingedrientName:ingname}),
+         onIngedrientRemove:(ingname)=>dispatch({type:actionType.REMOVE_INGREDIENT,ingedrientName:ingname})
+    }
+}
+
+ export default connect(mapStateToProps,mapDispatchToProps)(withErrorHandler(BurgerBuilder,axios));
