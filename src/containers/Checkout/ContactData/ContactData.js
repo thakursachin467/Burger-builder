@@ -4,6 +4,7 @@ import Button from '../../../components/UI/Button/Button';
 import axios from '../../../axios-orders';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
+import {connect }from 'react-redux';
 class ContactData extends Component{
         state={
             orderForm:{
@@ -99,14 +100,16 @@ class ContactData extends Component{
                 for(let formElement in this.state.orderForm){
                     formData[formElement]=this.state.orderForm[formElement].value;
                 }
-                console.log(this.props.ingedrient);  
+                console.log(this.props.ings);  
                 this.setState({loading:true});
                 const order = {
-                    ingedrient: this.props.ingedrient,
+                    ingedrient: this.props.ings,
                     price: this.props.price,
                     orderData:formData
                    
                 }
+
+                console.log(order);
                 axios.post('/orders.json', order)
                     .then((response) => {
                         this.setState({
@@ -214,4 +217,11 @@ class ContactData extends Component{
         }
 }
 
-export default ContactData;
+const mapStateToProps=states=>{
+    return {
+        ings:states.ingedrient,
+        price:states.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);

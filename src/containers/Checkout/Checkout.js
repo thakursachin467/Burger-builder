@@ -25,7 +25,7 @@ class Checkout extends Component {
         return(
             <div>
                 {orderSummary}
-                <Route path={this.props.match.path + '/contact-data'}  render={(props)=>(<ContactData ingedrient={this.props.ingst} price={this.props.price} {...props}/>)}/>
+                <Route path={this.props.match.path + '/contact-data'}  component={ContactData }/>
             </div>
         );
     }
@@ -34,8 +34,7 @@ class Checkout extends Component {
 
 const mapStateToProps=state=>{
     return {
-        ings:state.ingedrient,
-        price:state.totalPrice
+        ings:state.ingedrient
     }
 }
 

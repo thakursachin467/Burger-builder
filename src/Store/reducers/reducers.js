@@ -1,13 +1,10 @@
-import * as actionTypes from './actions';
+import * as actionTypes from '../actions/actions';
 
 const initialState={
-    ingedrient:{
-        salad:0,
-        meat:0,
-        cheese:0,
-        bacon:0
-    },
-    totalPrice:40
+    ingedrient:null,
+    totalPrice:40,
+    error:false,
+    loading:false
 };
  
 const INGEDRIENT_PRICES={
@@ -36,6 +33,18 @@ const reducer = (state=initialState,action)=>{
                     },
                     totalPrice:state.totalPrice-INGEDRIENT_PRICES[action.ingedrientName]
                 }
+            case actionTypes.SET_INGEDRIENTS:
+                return{
+                    ...state,
+                    ingedrient:action.ingedrients,
+                    error:false
+                }
+            case actionTypes.ERROR_HANDLER:
+                return{
+                    ...state,
+                    error:true
+                };
+                
             default:
                 return state;
 
