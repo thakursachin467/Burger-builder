@@ -1,9 +1,11 @@
 import React,{Component} from 'react';
-import {Route} from 'react-router-dom';
+import {Route,Redirect} from 'react-router-dom';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import {connect } from 'react-redux';
+import * as orders from '../../Store/actions/index';
+
 class Checkout extends Component {
    
     
@@ -17,13 +19,19 @@ class Checkout extends Component {
 
     render(){
         let orderSummary=<Spinner/>;
+        let purchased;
         if(this.props.ings){
+            purchased=this.props.purchased ? <Redirect to="/" />:null ;
             orderSummary=<CheckoutSummary ingedrient={this.props.ings}
             checkoutCancel={this.checkoutCancelHandller}
             checkoutContinue={this.checkoutContinueHandller}/>;
+            
+        } else {
+            orderSummary=<Redirect to="/" />
         }
         return(
             <div>
+                {purchased}
                 {orderSummary}
                 <Route path={this.props.match.path + '/contact-data'}  component={ContactData }/>
             </div>
@@ -34,8 +42,11 @@ class Checkout extends Component {
 
 const mapStateToProps=state=>{
     return {
-        ings:state.ingedrient
+        ings:state.burgerBuilder.ingedrient,
+        purchased:state.order.purchasing
     }
 }
+
+
 
 export default connect(mapStateToProps)(Checkout);

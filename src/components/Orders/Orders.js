@@ -31,17 +31,27 @@ class Orders extends Component {
     }
     render(){
         let Orders=<Spinner value={Math.floor((Math.random() * 4) + 1)}/>
+       
+            
         if(!this.state.loading){
-
+            if(this.state.orders.length===0){
+                Orders=<p style={{"textAlign":"center","fontWeight":"bold"}}>You havn't placed any order yet</p>;
+                
+    
+            } else{
             Orders= 
                 this.state.orders.map(order=>{
                return <Order 
                Ingedrients={order.ingedrient}
                Price={order.price}
-               key={order.id}/>
+               key={order.id}/>;
+
+              
             })
            
         }
+    }
+    
         return (
             <Aux>
             {Orders}

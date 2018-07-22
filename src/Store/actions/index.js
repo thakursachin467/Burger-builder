@@ -4,3 +4,8 @@ export {
     fetchIngedrients
 } from './burgerBuilder';
 
+export {
+    purchaseBurgerStart,
+    purchaseNew
+}
+from './order';

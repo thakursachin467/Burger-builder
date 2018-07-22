@@ -37,7 +37,8 @@ const reducer = (state=initialState,action)=>{
                 return{
                     ...state,
                     ingedrient:action.ingedrients,
-                    error:false
+                    error:false,
+                    totalPrice:40
                 }
             case actionTypes.ERROR_HANDLER:
                 return{
