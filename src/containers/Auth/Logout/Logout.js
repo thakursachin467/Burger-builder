@@ -1,0 +1,21 @@
+import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom'; 
+import {connect} from 'react-redux';
+import * as actions from '../../../Store/actions/index';
+
+class Logout extends Component {
+    componentDidMount(){
+        this.props.onLogout();
+    }
+    render(){
+        return(
+            <Redirect to="/Auth"/>
+        );
+    }
+}
+const MapDispatchToProps= dispatch =>{
+    return{
+        onLogout:()=>dispatch(actions.logout())
+    }
+}
+export default connect(null,MapDispatchToProps)(Logout);

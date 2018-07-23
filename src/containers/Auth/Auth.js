@@ -6,6 +6,7 @@ import * as actions from '../../Store/actions/index';
 import {connect} from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Modal from '../../components/UI/Modal/Modal';
+import {Redirect} from 'react-router-dom';
 class Auth extends Component {
     state={
         controls:{
@@ -102,6 +103,8 @@ signinHandler=()=>{
     })
 }
 
+    
+
 
 
     render(){
@@ -140,6 +143,10 @@ signinHandler=()=>{
             
 
         }
+        let link=null;
+        if(this.props.isAuthenticate){
+            link=<Redirect to="/"/>
+        }
 
         return(
             <div className={classes.Form}>
@@ -149,6 +156,7 @@ signinHandler=()=>{
                 </form>
                 <Button inputtype="input"   className={classes.Input}   btnType="Danger" clicked={this.signinHandler}>Switch to {this.state.isSignUp?'Sign-in' :'Sign-up'}</Button>
                 {error}
+                {link}
             </div>
         );
     }
@@ -159,7 +167,8 @@ signinHandler=()=>{
 const mapStateToProps= state=>{
     return {
         loading:state.auth.loading,
-        error:state.auth.error
+        error:state.auth.error,
+        isAuthenticate:state.auth.token !==null
     }
 }
 
