@@ -4,14 +4,14 @@ import axios from '../../axios-orders';
 import Spinner from '../UI/Spinner/Spinner';
 import Aux from '../../hoc/Aux';
 import withErrorHandler from '../../hoc/withErrorHandler/WithErrorHandler';
-
+import {connect} from 'react-redux';
 class Orders extends Component {
     state={
         orders:null,
         loading:true
     }
     componentDidMount(){
-        axios.get('/orders.json')
+        axios.get('/orders.json?auth='+  this.props.token )
         .then((response)=>{
             console.log(response.data);
             const fetchedData=[];
@@ -34,10 +34,12 @@ class Orders extends Component {
        
             
         if(!this.state.loading){
-            if(this.state.orders.length===0){
-                Orders=<p style={{"textAlign":"center","fontWeight":"bold"}}>You havn't placed any order yet</p>;
+            if(this.state.orders==null){
+                Orders=<p style={{"textAlign":"center","fontWeight":"bold"}}>Please Login to see your orders</p>;
                 
     
+            } else if(this.state.orders.length===0){
+                Orders=<p style={{"textAlign":"center","fontWeight":"bold"}}>You havn't placed any order yet</p>;
             } else{
             Orders= 
                 this.state.orders.map(order=>{
@@ -60,5 +62,10 @@ class Orders extends Component {
     }
 }
 
+const mapPropsToState=(state)=>{
+    return{
+    token:state.auth.token
+    }
+}
 
-export default withErrorHandler(Orders,axios);
+export default connect(mapPropsToState)(withErrorHandler(Orders,axios));

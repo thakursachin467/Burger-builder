@@ -12,6 +12,8 @@ from './order';
 
 
 export {
-    auth
+    auth,
+    signin,
+    modal
 }
 from './auth';

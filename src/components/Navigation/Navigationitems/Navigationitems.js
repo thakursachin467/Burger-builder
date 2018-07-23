@@ -5,9 +5,10 @@ const navigationitems=(props)=>(
     <ul className={classes.NavigationItems}>
        <NavigationItem link="/" exact>Burger Builder </NavigationItem>
        <NavigationItem link="/orders">Orders</NavigationItem>
-       <NavigationItem link="/Auth">Authenticate</NavigationItem>
+       {props.token ?<NavigationItem link="/Auth">LogOut</NavigationItem> : <NavigationItem link="/Auth">Authenticate</NavigationItem> }
     </ul>
 );
+
 
 export default navigationitems;
 

@@ -9,10 +9,12 @@ import {createStore,applyMiddleware,compose,combineReducers} from 'redux';
 import reducer from './Store/reducers/reducers';
 import thunk from 'redux-thunk';
 import order from './Store/reducers/order';
+import auth from './Store/reducers/auth';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducers=combineReducers({
     burgerBuilder:reducer,
-    order:order
+    order:order,
+    auth:auth
 })
 const store =createStore(rootReducers,composeEnhancers(applyMiddleware(thunk)));
 const app =(
