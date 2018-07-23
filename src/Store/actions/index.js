@@ -9,3 +9,9 @@ export {
     purchaseNew
 }
 from './order';
+
+
+export {
+    auth
+}
+from './auth';

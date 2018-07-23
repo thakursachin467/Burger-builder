@@ -4,7 +4,7 @@ import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSumm
 import ContactData from './ContactData/ContactData';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import {connect } from 'react-redux';
-import * as orders from '../../Store/actions/index';
+
 
 class Checkout extends Component {
    

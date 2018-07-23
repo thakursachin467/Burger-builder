@@ -6,3 +6,6 @@ export const PURCHASE_BURGER_START="PURCHASE_BURGER_START";
 export const ORDER_SUCESS="ORDER_SUCESS";
 export const ORDER_FAIL="ORDER_FAIL";
 export const PURCHASE_NEW="PURCHASE_NEW";
+export const AUTH_START="AUTH_START";
+export const AUTH_SUCCESS="AUTH_SUCCESS";
+export const AUTH_FAIL="AUTH_FAIL";
