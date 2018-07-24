@@ -108,12 +108,13 @@ class ContactData extends Component{
                 const order = {
                     ingedrient: this.props.ings,
                     price: this.props.price,
-                    orderData:formData
+                    orderData:formData,
+                    user:this.props.userId
                    
                 }
 
                 console.log(order);
-                this.props.onOrderBurger(order,this.props.token);
+                this.props.onOrderBurger(order,this.props.token,this.props.userId);
         }
 
         checkValidation=(value,rules)=>{
@@ -212,7 +213,8 @@ const mapStateToProps=states=>{
         ings:states.burgerBuilder.ingedrient,
         price:states.burgerBuilder.totalPrice,
         loading:states.order.loading,
-        token:states.auth.token
+        token:states.auth.token,
+        userId:states.auth.userId
     }
 };
 

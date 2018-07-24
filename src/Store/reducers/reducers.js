@@ -4,7 +4,8 @@ const initialState={
     ingedrient:null,
     totalPrice:40,
     error:false,
-    loading:false
+    loading:false,
+    building:false
 };
  
 const INGEDRIENT_PRICES={
@@ -22,7 +23,8 @@ const reducer = (state=initialState,action)=>{
                         ...state.ingedrient,
                         [action.ingedrientName]:state.ingedrient[action.ingedrientName] + 1
                     },
-                    totalPrice:state.totalPrice+INGEDRIENT_PRICES[action.ingedrientName]
+                    totalPrice:state.totalPrice+INGEDRIENT_PRICES[action.ingedrientName],
+                    building:true
                 }
             case actionTypes.REMOVE_INGREDIENT:
                 return{
@@ -31,14 +33,16 @@ const reducer = (state=initialState,action)=>{
                         ...state.ingedrient,
                         [action.ingedrientName]:state.ingedrient[action.ingedrientName] - 1
                     },
-                    totalPrice:state.totalPrice-INGEDRIENT_PRICES[action.ingedrientName]
+                    totalPrice:state.totalPrice-INGEDRIENT_PRICES[action.ingedrientName],
+                    building:true
                 }
             case actionTypes.SET_INGEDRIENTS:
                 return{
                     ...state,
                     ingedrient:action.ingedrients,
                     error:false,
-                    totalPrice:40
+                    totalPrice:40,
+                    building:false
                 }
             case actionTypes.ERROR_HANDLER:
                 return{

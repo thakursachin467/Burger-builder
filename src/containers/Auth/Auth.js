@@ -145,7 +145,12 @@ signinHandler=()=>{
         }
         let link=null;
         if(this.props.isAuthenticate){
+            
+            if(this.props.building){
+                link=<Redirect to="/checkout"/>
+            }else{
             link=<Redirect to="/"/>
+            }
         }
 
         return(
@@ -168,7 +173,8 @@ const mapStateToProps= state=>{
     return {
         loading:state.auth.loading,
         error:state.auth.error,
-        isAuthenticate:state.auth.token !==null
+        isAuthenticate:state.auth.token !==null,
+        building:state.burgerBuilder.building
     }
 }
 
