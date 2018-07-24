@@ -15,6 +15,7 @@ export {
     auth,
     signin,
     modal,
-    logout
+    logout,
+    authCheckState
 }
 from './auth';

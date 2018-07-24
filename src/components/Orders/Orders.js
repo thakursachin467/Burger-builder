@@ -11,8 +11,11 @@ class Orders extends Component {
         loading:true
     }
     componentDidMount(){
-        axios.get('/orders.json?auth='+  this.props.token )
-        .then((response)=>{
+        console.log(this.props.userid);
+        const queryParams='?auth='+ this.props.token + '&orderBy="user"&equalTo="'+ this.props.userid + '"';
+        console.log(queryParams)
+        axios.get('/orders.json'+queryParams) 
+        .then((response)=>{ 
             console.log(response.data);
             const fetchedData=[];
             for(let key in response.data){
@@ -34,11 +37,11 @@ class Orders extends Component {
        
             
         if(!this.state.loading){
-            if(this.state.orders==null){
+            if(this.props.token==null){
                 Orders=<p style={{"textAlign":"center","fontWeight":"bold"}}>Please Login to see your orders</p>;
                 
     
-            } else if(this.state.orders.length===0){
+            } else if(this.state.orders===null ||this.state.orders.length===0){
                 Orders=<p style={{"textAlign":"center","fontWeight":"bold"}}>You havn't placed any order yet</p>;
             } else{
             Orders= 
@@ -64,7 +67,8 @@ class Orders extends Component {
 
 const mapPropsToState=(state)=>{
     return{
-    token:state.auth.token
+    token:state.auth.token,
+    userid:state.auth.userId
     }
 }
 

@@ -114,7 +114,7 @@ class ContactData extends Component{
                 }
 
                 console.log(order);
-                this.props.onOrderBurger(order,this.props.token,this.props.userId);
+                this.props.onOrderBurger(order,this.props.token);
         }
 
         checkValidation=(value,rules)=>{
