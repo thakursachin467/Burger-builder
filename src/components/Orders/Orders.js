@@ -11,12 +11,12 @@ class Orders extends Component {
         loading:true
     }
     componentDidMount(){
-        console.log(this.props.userid);
+        
         const queryParams='?auth='+ this.props.token + '&orderBy="user"&equalTo="'+ this.props.userid + '"';
-        console.log(queryParams)
+        
         axios.get('/orders.json'+queryParams) 
         .then((response)=>{ 
-            console.log(response.data);
+           
             const fetchedData=[];
             for(let key in response.data){
                 fetchedData.push({
@@ -28,7 +28,7 @@ class Orders extends Component {
             this.setState({loading:false,orders:fetchedData});
         })
         .catch((error)=>{
-            console.log(error);
+           
             this.setState({loading:false});
         })
     }

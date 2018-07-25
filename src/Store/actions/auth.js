@@ -54,11 +54,11 @@ export const  auth = (email,password)=>{
             
             dispatch(authSucess(response.data.idToken,response.data.idToken.localId));
             dispatch(checkAuthTimeOut(response.data.expiresIn));
-            console.log(response.data);
+            
         })
         .catch((error)=>{
             dispatch(authFail(error));
-            console.log(error.response.data.error.message);
+            
 
         })
     }
@@ -85,11 +85,11 @@ export const signin=(email,password)=>{
             localStorage.setItem('expiresIn',expireDate);
             localStorage.setItem('userId',response.data.localId);
             dispatch(authSucess(response.data.idToken,response.data.localId));
-            console.log(response);
+           
         })
         .catch((error)=>{
             dispatch(authFail(error));
-            console.log(error);
+         
         });
     }
 }

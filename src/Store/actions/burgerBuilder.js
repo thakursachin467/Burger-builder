@@ -17,7 +17,7 @@ export const removeIngedrients=(igName)=>{
 }
 
 export const setIngedrient=(ingedrients)=>{
-    console.log("here");
+    
     return{
         type:actionTypes.SET_INGEDRIENTS,
         ingedrients:ingedrients
